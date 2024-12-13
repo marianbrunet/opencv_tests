@@ -1,8 +1,8 @@
 import cv2 as cv
 import numpy as np
 
-video = cv.VideoCapture("greenscreen-demo.mp4")
-background = cv.imread("background.jpg")
+video = cv.VideoCapture("greenscreen-asteroid.mp4")
+background = cv.imread("pizza.jpg")
 
 
 #First select patch of green
@@ -77,19 +77,13 @@ while True:
     # Invert the mask to keep non-green areas
     mask_inv = cv.bitwise_not(mask)
 
-    # Apply the mask to make green areas transparent
-    #frame[:, :, 3] = mask_inv
-
-    #imageF = cv.addWeighted(frame, 1, background, 1, 0)
-    cv.imshow("maskqF", mask_inv)
+    #cv.imshow("maskqF", mask_inv)
     res = cv.bitwise_and(frame, frame, mask = mask_inv)
     f = frame - res
     f = np.where(f == 0, frame, image)
     
-
     frame = cv.cvtColor(frame, cv.COLOR_HSV2BGR)
     f = cv.cvtColor(f, cv.COLOR_HSV2BGR)
-
 
     cv.imshow("original", frame)
     cv.imshow(windowName, f)
